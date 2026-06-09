@@ -1,0 +1,16 @@
+{
+  "evp_version": "1.0",
+  "verdict": "INSUFFICIENT_SIGNAL",
+  "score": null,
+  "axes": {
+    "trademark":     { "status": "CLEAR",                "score": 88,   "confidence": 0.90 },
+    "domain":        { "status": "CLEAR",                "score": 85,   "confidence": 0.92 },
+    "cultural":      { "status": "INSUFFICIENT_SIGNAL",  "score": null, "confidence": null },
+    "sound":         { "status": "CLEAR",                "score": 78,   "confidence": 0.85 },
+    "pronunciation": { "status": "CLEAR",                "score": 80,   "confidence": 0.88 }
+  },
+  "disclaimer": "Etymolt reports on records of record (USPTO, public domain databases, public cultural references). Etymolt does not opine on trademark infringement and is not a law firm. This verdict is informational; consult licensed counsel before relying on it for filings.",
+  "signature": "mock-sig-4",
+  "signature_key_id": "mock-key-1",
+  "signature_payload_digest": "mock-digest-4"
+}
