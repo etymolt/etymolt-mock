@@ -24,21 +24,51 @@ const etymolt = new Etymolt({ baseUrl: "http://localhost:4242" });
 const verdict = await etymolt.verify("Stratagem");
 ```
 
+Both `@etymolt/sdk` (Node) and `etymolt` (Python) SDKs honor `ETYMOLT_BASE_URL`.
+
 ## What you get
 
 - `POST /v1/verify` — returns an EVP/1 verdict deterministically derived from the name.
 - `GET /.well-known/evp-keys.json` — a stub JWKS for signature-verification testing.
 
-Same name → same verdict, every time. Use the four fixture names below to test each verdict path:
+Same name → same verdict, every time. SHA-256 of the name buckets into one of four fixture templates:
 
-| Verdict | Pick names that hash into | Used in tests |
-|---|---|---|
-| `PROCEED` | (1 in 4 of any name) | `Inkstack` |
-| `ITERATE` | (1 in 4 of any name) | `Stratagem` |
-| `ABANDON` | (1 in 4 of any name) | `Sigil` |
-| `INSUFFICIENT_SIGNAL` | (1 in 4 of any name) | `Aiyana` |
+| Verdict | Canonical test name |
+|---|---|
+| `PROCEED` | `Inkstack`, `Aiyana`, `Lyra` |
+| `ITERATE` | `Forgent`, `Tessera`, `Nexa` |
+| `ABANDON` | `Stratagem` |
+| `INSUFFICIENT_SIGNAL` | `Sigil` |
 
-(Deterministic, but bucket assignment is by name-hash. The cookbook recipes use those four canonical names.)
+If you need a specific verdict path, use one of the canonical names above. Other names map deterministically into one of the four buckets via the same hash.
+
+## The verdict envelope
+
+Fixtures match the EVP/1 wire format:
+
+```json
+{
+  "evp_version": "1.0.0",
+  "verdict": "PROCEED" | "ITERATE" | "DECIDE" | "ABANDON" | "INSUFFICIENT_SIGNAL",
+  "score": <int> | null,
+  "axes": {
+    "trademark":      { "status": "...", "score": ..., "confidence": ... },
+    "domain":         { ... },
+    "cultural":       { ... },
+    "sound_symbolism":{ ... },
+    "pronunciation":  { ... }
+  },
+  "verdict_id": "mock_...",
+  "issued_at": "...",
+  "valid_until": "...",
+  "disclaimer": "...",
+  "signature": "mock-sig-...",
+  "signature_key_id": "mock-key-1",
+  "signature_payload_digest": "..."
+}
+```
+
+Score is `null` when the verdict is `INSUFFICIENT_SIGNAL`.
 
 ## License
 

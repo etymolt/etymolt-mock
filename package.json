@@ -1,6 +1,6 @@
 {
   "name": "@etymolt/mock",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Local mock server for the Etymolt API. Serves deterministic EVP/1 verdicts from fixtures for offline development.",
   "license": "Apache-2.0",
   "type": "module",
@@ -8,13 +8,26 @@
     "etymolt-mock": "./src/cli.js"
   },
   "exports": "./src/index.js",
-  "files": ["src/", "README.md", "LICENSE"],
+  "files": [
+    "src/",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "start": "node src/cli.js",
     "test": "node --test tests/*.test.js"
   },
-  "keywords": ["etymolt", "mock", "evp", "verdict", "testing", "offline-dev"],
-  "engines": { "node": ">=18" },
+  "keywords": [
+    "etymolt",
+    "mock",
+    "evp",
+    "verdict",
+    "testing",
+    "offline-dev"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
   "repository": "github:etymolt/etymolt-mock",
   "homepage": "https://github.com/etymolt/etymolt-mock",
   "bugs": "https://github.com/etymolt/etymolt-mock/issues"

@@ -14,7 +14,7 @@ test("verdictFor stamps the name", () => {
   assert.equal(v.name, "Stratagem");
 });
 
-test("verdictFor includes the required disclaimer", () => {
+test("verdictFor includes the required disclaimer verbatim", () => {
   const v = verdictFor("Sigil");
   assert.ok(v.disclaimer.includes("records of record"));
   assert.ok(v.disclaimer.includes("not a law firm"));
@@ -25,4 +25,29 @@ test("verdictFor sets temporal validity", () => {
   assert.ok(v.issued_at);
   assert.ok(v.valid_until);
   assert.ok(new Date(v.valid_until) > new Date(v.issued_at));
+});
+
+test("axes use canonical names (sound_symbolism, not sound)", () => {
+  const v = verdictFor("Inkstack");
+  assert.ok("sound_symbolism" in v.axes, "expected sound_symbolism axis");
+  assert.ok(!("sound" in v.axes), "old 'sound' axis must be gone");
+  for (const k of ["trademark", "domain", "cultural", "sound_symbolism", "pronunciation"]) {
+    assert.ok(k in v.axes, `missing axis ${k}`);
+  }
+});
+
+test("canonical name buckets — Inkstack → PROCEED, Stratagem → ABANDON, Sigil → INSUFFICIENT_SIGNAL", () => {
+  assert.equal(verdictFor("Inkstack").verdict, "PROCEED");
+  assert.equal(verdictFor("Stratagem").verdict, "ABANDON");
+  assert.equal(verdictFor("Sigil").verdict, "INSUFFICIENT_SIGNAL");
+});
+
+test("INSUFFICIENT_SIGNAL has null score", () => {
+  const v = verdictFor("Sigil");
+  assert.equal(v.score, null);
+});
+
+test("evp_version present on every verdict", () => {
+  const v = verdictFor("Anything");
+  assert.match(v.evp_version, /^1\.\d+\.\d+$/);
 });
