@@ -36,13 +36,17 @@ test("axes use canonical names (sound_symbolism, not sound)", () => {
   }
 });
 
-test("canonical name buckets — Inkstack → PROCEED, Stratagem → ABANDON", () => {
-  assert.equal(verdictFor("Inkstack").verdict, "PROCEED");
+test("canonical name buckets — verified against actual hash output", () => {
+  // After 3-value migration, hash buckets re-shuffle. Verify the actual mapping.
+  // Use these canonical names for tests requiring specific verdicts.
   assert.equal(verdictFor("Stratagem").verdict, "ABANDON");
-  // Sigil now returns ABANDON with status=partial (was INSUFFICIENT_SIGNAL in 5-value)
-  const s = verdictFor("Sigil");
-  assert.equal(s.verdict, "ABANDON");
-  assert.equal(s.status, "partial");
+  assert.equal(verdictFor("Forgent").verdict, "PROCEED");
+  // Sigil → ABANDON with status:partial (was INSUFFICIENT_SIGNAL)
+  const sigil = verdictFor("Sigil");
+  assert.equal(sigil.verdict, "ABANDON");
+  assert.equal(sigil.status, "partial");
+  // Inkstack → PROCEED_STRATEGIC (the new 3-value tier)
+  assert.equal(verdictFor("Inkstack").verdict, "PROCEED_STRATEGIC");
 });
 
 test("partial status has null score", () => {
