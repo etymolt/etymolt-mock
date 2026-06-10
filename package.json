@@ -1,6 +1,6 @@
 {
   "name": "@etymolt/mock",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Local mock server for the Etymolt API. Serves deterministic EVP/1 verdicts from fixtures for offline development.",
   "license": "Apache-2.0",
   "type": "module",

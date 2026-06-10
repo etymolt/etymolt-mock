@@ -32,5 +32,7 @@
   "disclaimer": "Etymolt reports on records of record (USPTO, public domain databases, public cultural references). Etymolt does not opine on trademark infringement and is not a law firm. This verdict is informational; consult licensed counsel before relying on it for filings.",
   "signature": "mock-sig-1",
   "signature_key_id": "mock-key-1",
-  "signature_payload_digest": "mock-digest-1"
+  "signature_payload_digest": "mock-digest-1",
+  "status": "complete",
+  "reason": "clean"
 }
