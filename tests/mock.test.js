@@ -36,14 +36,18 @@ test("axes use canonical names (sound_symbolism, not sound)", () => {
   }
 });
 
-test("canonical name buckets — Inkstack → PROCEED, Stratagem → ABANDON, Sigil → INSUFFICIENT_SIGNAL", () => {
+test("canonical name buckets — Inkstack → PROCEED, Stratagem → ABANDON", () => {
   assert.equal(verdictFor("Inkstack").verdict, "PROCEED");
   assert.equal(verdictFor("Stratagem").verdict, "ABANDON");
-  assert.equal(verdictFor("Sigil").verdict, "INSUFFICIENT_SIGNAL");
+  // Sigil now returns ABANDON with status=partial (was INSUFFICIENT_SIGNAL in 5-value)
+  const s = verdictFor("Sigil");
+  assert.equal(s.verdict, "ABANDON");
+  assert.equal(s.status, "partial");
 });
 
-test("INSUFFICIENT_SIGNAL has null score", () => {
+test("partial status has null score", () => {
   const v = verdictFor("Sigil");
+  assert.equal(v.status, "partial");
   assert.equal(v.score, null);
 });
 

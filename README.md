@@ -33,12 +33,12 @@ Both `@etymolt/sdk` (Node) and `etymolt` (Python) SDKs honor `ETYMOLT_BASE_URL`.
 
 Same name → same verdict, every time. SHA-256 of the name buckets into one of four fixture templates:
 
-| Verdict | Canonical test name |
-|---|---|
-| `PROCEED` | `Inkstack`, `Aiyana`, `Lyra` |
-| `ITERATE` | `Forgent`, `Tessera`, `Nexa` |
-| `ABANDON` | `Stratagem` |
-| `INSUFFICIENT_SIGNAL` | `Sigil` |
+| Verdict | Status | Canonical test name |
+|---|---|---|
+| `PROCEED` | `complete` | `Inkstack`, `Aiyana`, `Lyra` |
+| `PROCEED_STRATEGIC` | `complete` | `Forgent`, `Tessera`, `Nexa` |
+| `ABANDON` | `complete` | `Stratagem` |
+| `ABANDON` | `partial` (insufficient signal) | `Sigil` |
 
 If you need a specific verdict path, use one of the canonical names above. Other names map deterministically into one of the four buckets via the same hash.
 
@@ -49,7 +49,9 @@ Fixtures match the EVP/1 wire format:
 ```json
 {
   "evp_version": "1.0.0",
-  "verdict": "PROCEED" | "ITERATE" | "DECIDE" | "ABANDON" | "INSUFFICIENT_SIGNAL",
+  "verdict": "PROCEED" | "PROCEED_STRATEGIC" | "ABANDON",
+  "status": "complete" | "partial",
+  "reason": "clean" | "coexistence_required" | "hard_blocker" | "no_workaround" | "insufficient_signal",
   "score": <int> | null,
   "axes": {
     "trademark":      { "status": "...", "score": ..., "confidence": ... },
