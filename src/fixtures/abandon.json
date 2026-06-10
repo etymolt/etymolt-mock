@@ -1,5 +1,5 @@
 {
-  "evp_version": "1.0",
+  "evp_version": "1.0.0",
   "verdict": "ABANDON",
   "score": 12,
   "axes": {
